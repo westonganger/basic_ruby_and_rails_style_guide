@@ -184,6 +184,32 @@ add_column :my_table, :col, :string, null: false
 validates :col, presence: true ### in model
 ```
 
+Use `left_joins` instead of `joins` whenever its possible the association could be null. `joins` will exclude records with missing associations from the results, this usually is not what you want.
+
+```ruby
+### Good
+Account.left_joins(:owner_user) ### Allows for owner_user to be missing and still include the record in results
+
+### Bad
+Account.joins(:owner_user)
+```
+
+Always place ActiveRecord `references` calls directly after the associated `includes` call. The arguments to `references` need to be changed in tandem with the arguments of `includes`
+
+```ruby
+### Bad
+Post.all
+  .includes()
+  .where()
+  .references()
+
+### Good
+Post.all
+  .includes()
+  .references()
+  .where()
+```
+
 
 ### ERB
 
