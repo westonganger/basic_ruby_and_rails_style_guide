@@ -35,6 +35,17 @@ scope :visible, ->(){ where(visible: true) }
 
 ### Ruby
 
+Prefer named arguments over positional arguments when there is more than 1 arguments - this helps make the API's for the entire codebase greatly simplified
+
+```ruby
+### Bad
+def do_something(user, account, project, val=nil)
+
+### Good
+def do_something(user:, account:, project:, val: nil)
+```
+
+
 Freeze all constants whenever to avoid accidentally changing there value instead of accessing it.
 
 ```ruby
@@ -57,15 +68,6 @@ if str.exclude?("asd")
 if !str.include?("asd")
 ```
 
-Use string interpolation syntax `#{}` instead of `+` for string concatention
-
-```ruby
-### Bad
-str = name + ' ' + other
-
-### Good
-str = "#{name} #{other}"
-```
 
 Utilize `.presence` method whenever possible
 
@@ -141,14 +143,31 @@ item.fishery.&name
 item.fishery.try!(:name)
 ```
 
-Prefer named arguments over positional arguments when there is more than 1 arguments - this helps make the code more explicit
+
+Use string interpolation syntax `#{}` instead of `+` for string concatention
 
 ```ruby
 ### Bad
-def do_something(user, account, project, val=nil)
+str = name + ' ' + other
 
 ### Good
-def do_something(user:, account:, project:, val: nil)
+str = "#{name} #{other}"
+```
+
+
+Add at least 3 # sybols for developer comments and one # for code comments
+
+```ruby
+### Good
+
+### THIS IS A COMMENT
+# str = "commented out code"
+
+
+### Bad
+
+# this is a comment
+# str = "commented out code"
 ```
 
 
