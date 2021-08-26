@@ -91,10 +91,10 @@ Prefer `try!` over `&.` because its safer in that checks that you actually have 
 
 ```ruby
 ### Bad
-item.fishery.&name
+item.fishery.&namee ### never raises error
 
 ### Good
-item.fishery.try!(:name)
+item.fishery.try!(:namee) ### raises error cause its actually wrong
 ```
 
 
