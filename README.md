@@ -24,13 +24,13 @@ def do_something(user:, account:, project:, val: nil)
 Avoid Inline If/Unless Statements to be more readable, native languages usually do not read from Right to Left
 
 ```ruby
+### Bad
+val.to_a if val.present?
+
 ### Good
 if val.present?
   val.to_a
 end
-
-### Bad
-val.to_a if val.present?
 ```
 
 Prefer `if` over `unless`, it is easier to congnitively understand the code
@@ -49,32 +49,32 @@ if !str.include?("asd")
 Avoid using duck typing for methods, parenthesis help make the code more clear. The exception here is within view template files where is common place to exclude the parenthesis
 
 ```ruby
-### Good
-do_something(@item)
-
 ### Bad
 do_something @item
+
+### Good
+do_something(@item)
 ````
 
 
 Prefer Keyword over Hash Rocket syntax when key is non-quoted
 
 ```ruby
-### Good
-{foo: 'bar'}
-
 ### Bad
 {'foo' => 'bar'}
+
+### Good
+{foo: 'bar'}
 ```
 
 Prefer Hash Rocket over Keyword syntax when key is quoted
 
 ```ruby
-### Good
-{'foo-bar' => 'bar'}
-
 ### Bad
 {'foo-bar': 'bar'}
+
+### Good
+{'foo-bar' => 'bar'}
 ```
 
 Inline rescue - Avoid rescue which is slow and instead use a simple `try!` or `try` call.
@@ -147,15 +147,14 @@ str = "#{name} #{other}"
 Add at least 3 # sybols for developer comments and one # for code comments
 
 ```ruby
-### Good
-
-### THIS IS A COMMENT
-# str = "commented out code"
-
-
 ### Bad
 
 # this is a comment
+# str = "commented out code"
+
+### Good
+
+### THIS IS A COMMENT
 # str = "commented out code"
 ```
 
@@ -190,26 +189,29 @@ validates :col, presence: true ### in model
 
 Single Line ERB - Seperate start and end tags with a space
 
-```
-<%= options %> ### Good
+```er b
+### Bad
+<%=options%>
 
-<%=options%> ### Bad
+### Good
+<%= options %>
+
 ```
 
 Multi Line ERB - Seperate the start and end tags from the Ruby code
 
 ```erb
+### Bad
+<% Fishery
+     .where(...)
+     .includes(...) %>
+     
 ### Good
 <%=
   Fishery
     .where(...)
     .includes(...)
 %>
-
-### Bad
-<% Fishery
-     .where(...)
-     .includes(...) %>
 ```
 
 ### Javascript
