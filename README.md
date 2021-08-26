@@ -7,32 +7,6 @@ Helpful tips for clean and consistent code. This list is intended to be brief an
 - Use 2-space indentation for everything. Ruby, JS, CSS
 
 
-### Rails
-
-Always use null: true and rely on model validations. Its hard to deal with null db errors nicely in form validations.
-
-```ruby
-# Bad
-add_column :my_table, :col, :string, null: true
-
-# Good
-add_column :my_table, :col, :string, null: false
-
-validates :col, presence: true ### in model
-```
-
-
-Never use default_scope, later it will become a MAJOR problem
-
-```ruby
-### Bad
-default_scope ->(){ where(visible: true) }
-
-### Good
-scope :visible, ->(){ where(visible: true) }
-```
-
-
 ### Ruby
 
 Prefer named arguments over positional arguments when there is more than 1 arguments - this helps make the API's for the entire codebase greatly simplified
@@ -46,14 +20,17 @@ def do_something(user:, account:, project:, val: nil)
 ```
 
 
-Freeze all constants whenever to avoid accidentally changing there value instead of accessing it.
+
+Avoid Inline If/Unless Statements to be more readable, native languages usually do not read from Right to Left
 
 ```ruby
-### Bad
-MY_CONSTANT = ["str"]
-
 ### Good
-MY_CONSTANT = ["str"].freeze
+if val.present?
+  val.to_a
+end
+
+### Bad
+val.to_a if val.present?
 ```
 
 Prefer `if` over `unless`, it is easier to congnitively understand the code
@@ -69,18 +46,6 @@ if !str.include?("asd")
 ```
 
 
-Utilize `.presence` method whenever possible
-
-```ruby
-### Bad
-str = name || item.association.try!(:name)
-
-str = name.present? ? name : item.association.try!(:name)
-
-### Good
-str = name.presence || item.association.try!(:name)
-```
-
 Avoid using duck typing for methods, parenthesis help make the code more clear. The exception here is within view template files where is common place to exclude the parenthesis
 
 ```ruby
@@ -91,17 +56,6 @@ do_something(@item)
 do_something @item
 ````
 
-Avoid Inline If/Unless Statements to be more readable, native languages usually do not read from Right to Left
-
-```ruby
-### Good
-if val.present?
-  val.to_a
-end
-
-### Bad
-val.to_a if val.present?
-```
 
 Prefer Keyword over Hash Rocket syntax when key is non-quoted
 
@@ -144,6 +98,41 @@ item.fishery.try!(:name)
 ```
 
 
+
+Utilize `.presence` method whenever possible
+
+```ruby
+### Bad
+str = name || item.association.try!(:name)
+
+str = name.present? ? name : item.association.try!(:name)
+
+### Good
+str = name.presence || item.association.try!(:name)
+```
+
+
+Freeze all constants whenever to avoid accidentally changing there value instead of accessing it.
+
+```ruby
+### Bad
+MY_CONSTANT = ["str"]
+
+### Good
+MY_CONSTANT = ["str"].freeze
+
+TWO_CONSTANT = {
+  foo: {
+    ...
+  }.freeze
+  
+  bar: {
+    ...
+  }.freeze
+}.freeze
+```
+
+
 Use string interpolation syntax `#{}` instead of `+` for string concatention
 
 ```ruby
@@ -168,6 +157,32 @@ Add at least 3 # sybols for developer comments and one # for code comments
 
 # this is a comment
 # str = "commented out code"
+```
+
+
+### Rails
+
+
+Never use default_scope, later it will become a MAJOR problem, the main reason is that it also affects associations.
+
+```ruby
+### Bad
+default_scope ->(){ where(visible: true) }
+
+### Good
+scope :visible, ->(){ where(visible: true) }
+```
+
+Always use null: true and rely on model validations. Its hard to deal with null db errors nicely in form validations.
+
+```ruby
+# Bad
+add_column :my_table, :col, :string, null: true
+
+# Good
+add_column :my_table, :col, :string, null: false
+
+validates :col, presence: true ### in model
 ```
 
 
