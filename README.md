@@ -219,12 +219,14 @@ Multi Line ERB - Seperate the start and end tags from the Ruby code
 Place Function start bracket on same line as function
 
 ```javscript
-// Good
-function doSomething(){
-  <code here>
-
 // Bad
 function doSomething()
 {
   <code here>
+}
+  
+// Good
+function doSomething(){
+  <code here>
+}
 ```
