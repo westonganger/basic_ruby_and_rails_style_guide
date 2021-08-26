@@ -121,7 +121,7 @@ MY_CONSTANT = ["str"]
 ### Good
 MY_CONSTANT = ["str"].freeze
 
-TWO_CONSTANT = {
+HASH_CONSTANT = {
   foo: {
     ...
   }.freeze
