@@ -140,7 +140,7 @@ Use string interpolation syntax `#{}` instead of `+` for string concatention
 str = name + ' ' + other
 
 ### Good
-str = "#{name} #{other}"
+str = "#{name} #{other}".strip
 ```
 
 
